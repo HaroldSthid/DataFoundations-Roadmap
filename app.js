@@ -26,6 +26,14 @@ const resultEl = document.getElementById("sql-result");
 const inputEl = document.getElementById("sql-input");
 const runBtn = document.getElementById("run-sql");
 
+const editor = CodeMirror.fromTextArea(inputEl, {
+  mode: "text/x-sql",
+  theme: "default",
+  lineNumbers: true,
+  matchBrackets: true,
+  indentUnit: 2,
+});
+
 let db = null;
 
 function setStatus(text, isError) {
@@ -74,7 +82,7 @@ function runQuery() {
     return;
   }
   try {
-    const results = db.exec(inputEl.value);
+    const results = db.exec(editor.getValue());
     renderResults(results);
     setStatus(`OK · ${results.length} resultado(s)`, false);
   } catch (err) {

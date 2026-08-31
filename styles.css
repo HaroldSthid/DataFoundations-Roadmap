@@ -226,6 +226,16 @@ h1 {
   font-size: 0.95rem;
 }
 
+/* Video captions (collapsed by default) */
+.video-caption summary {
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+.video-caption summary::-webkit-details-marker { display: none; }
+.video-caption summary:hover { color: var(--text); }
+.video-caption p { margin: 8px 0 0; }
+
 /* Videos */
 .video-frame {
   position: relative;

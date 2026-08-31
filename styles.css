@@ -226,6 +226,35 @@ h1 {
   font-size: 0.95rem;
 }
 
+/* Karaoke */
+.karaoke-lines {
+  max-height: 420px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+.karaoke-stanza {
+  margin: 18px 0 6px;
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.karaoke-stanza:first-child { margin-top: 0; }
+.karaoke-line {
+  margin: 0;
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: var(--muted);
+  opacity: 0.55;
+  transition: opacity 200ms ease, color 200ms ease, background 200ms ease;
+}
+.karaoke-line.active {
+  opacity: 1;
+  color: var(--accent-green);
+  font-weight: 700;
+  background: var(--brand-soft);
+}
+
 /* Video captions (collapsed by default) */
 .video-caption summary {
   cursor: pointer;

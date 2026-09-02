@@ -4,14 +4,30 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Enjoy — Laboratorio BI</title>
-<meta name="description" content="Del Dato al Dashboard: letra original en Spanglish del roadmap, en modo karaoke.">
+<meta name="description" content="Playlist del Laboratorio BI: canciones originales del track, con modo karaoke.">
 <link rel="stylesheet" href="styles.css">
 <style>
   .enjoy-shell { max-width: 640px; margin: 0 auto; padding: 32px 24px; }
   .enjoy-back { display: inline-block; margin-bottom: 24px; }
   .enjoy-title { font-size: 1.6rem; margin-bottom: 6px; }
   .enjoy-wip { margin-top: 24px; }
-  #karaoke-lines { max-height: none; overflow: visible; }
+  .track-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 20px 0; }
+  .track-tab {
+    padding: 8px 14px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--surface);
+    color: var(--muted);
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .track-tab.active { background: var(--brand); color: var(--surface); border-color: var(--brand); }
+  .track { display: none; }
+  .track.active { display: block; }
+  .track-video { margin: 16px 0; }
+  .karaoke-lines { max-height: none; overflow: visible; }
 </style>
 </head>
 <body>
@@ -20,64 +36,114 @@
 
   <a class="enjoy-back meta" href="index.html">← Laboratorio BI</a>
 
-  <h1 class="enjoy-title">🎤 Enjoy — Del Dato al Dashboard</h1>
+  <h1 class="enjoy-title">🎤 Enjoy — Playlist</h1>
   <p class="meta">
-    Letra 100% original en Spanglish, escrita para este roadmap — repasa las 6 etapas del track de punta
-    a punta. Sin música todavía: ponele tu propio beat, cantala a capela, o usá el modo karaoke para
-    leerla en ritmo.
+    Canciones originales del track. Elegí una, mirá/escuchá el video, y activá el modo karaoke
+    para seguir la letra en ritmo.
   </p>
 
-  <div class="karaoke-lines" id="karaoke-lines" style="margin-top: 24px;">
-    <p class="karaoke-stanza">[Verso 1]</p>
-    <p class="karaoke-line">Empecé en Excel, contando a mano,</p>
-    <p class="karaoke-line">celdas y errores, todo un pantano,</p>
-    <p class="karaoke-line">aprendí rápido, no fue en vano,</p>
-    <p class="karaoke-line">ahora hablo SQL, ¡ese es mi hermano!</p>
-
-    <p class="karaoke-stanza">[Pre-Coro]</p>
-    <p class="karaoke-line">SELECT, FROM, WHERE, GROUP BY,</p>
-    <p class="karaoke-line">JOIN de tablas, uh-uh-uh-uy,</p>
-    <p class="karaoke-line">del CSV crudo al modelo estrella,</p>
-    <p class="karaoke-line">dim_cliente, dim_tiempo, dim_bella.</p>
-
-    <p class="karaoke-stanza">[Coro]</p>
-    <p class="karaoke-line">Del dato al dashboard, we go all the way,</p>
-    <p class="karaoke-line">from raw mess to insight, that's my everyday,</p>
-    <p class="karaoke-line">Python, pandas, y un poquito de fe,</p>
-    <p class="karaoke-line">data science, baby, that's the vibe I see.</p>
-
-    <p class="karaoke-stanza">[Verso 2]</p>
-    <p class="karaoke-line">Star schema armado, fact_ventas brilla,</p>
-    <p class="karaoke-line">Power BI abierto, ¡qué maravilla!</p>
-    <p class="karaoke-line">Después K-Means agrupa a mi gente,</p>
-    <p class="karaoke-line">clusters de valor, silently, fluently.</p>
-
-    <p class="karaoke-stanza">[Pre-Coro 2]</p>
-    <p class="karaoke-line">Random Forest vota, prediction time,</p>
-    <p class="karaoke-line">probabilidad de compra, so sublime,</p>
-    <p class="karaoke-line">train test split, ochenta-veinte va,</p>
-    <p class="karaoke-line">AUC-ROC, ¡ya casi está!</p>
-
-    <p class="karaoke-stanza">[Coro]</p>
-    <p class="karaoke-line">Del dato al dashboard, we go all the way,</p>
-    <p class="karaoke-line">from raw mess to insight, that's my everyday,</p>
-    <p class="karaoke-line">Python, pandas, y un poquito de fe,</p>
-    <p class="karaoke-line">data science, baby, that's the vibe I see.</p>
-
-    <p class="karaoke-stanza">[Puente]</p>
-    <p class="karaoke-line">No hace falta ser genio de la nada,</p>
-    <p class="karaoke-line">solo un repo más y otra madrugada,</p>
-    <p class="karaoke-line">de Fundamentals a Deploy final,</p>
-    <p class="karaoke-line">this is the track, this is the trail.</p>
-
-    <p class="karaoke-stanza">[Outro]</p>
-    <p class="karaoke-line">Del dato al dashboard — enjoy the ride,</p>
-    <p class="karaoke-line">Laboratorio BI, always by your side. 🎤</p>
+  <div class="track-tabs">
+    <button class="track-tab active" data-track="calls">Making the Calls</button>
+    <button class="track-tab" data-track="dashboard">Del Dato al Dashboard</button>
   </div>
 
-  <div class="actions" style="margin-top: 16px;">
-    <button id="karaoke-play" class="button primary">▶ Reproducir modo karaoke</button>
-    <button id="karaoke-reset" class="button secondary">⟲ Reiniciar</button>
+  <!-- Track 1: Making the Calls -->
+  <div class="track active" id="track-calls">
+    <p class="meta">
+      Original song, <a href="https://www.youtube.com/shorts/5n9VNp80uV0" target="_blank" rel="noopener">Harold Sthid Piravaguen</a>.
+      Perspectiva del data analyst: leer los números, encontrar la señal, y tomar la decisión.
+    </p>
+    <div class="video-frame track-video">
+      <iframe src="https://www.youtube.com/embed/5n9VNp80uV0" title="Making the Calls" loading="lazy" allowfullscreen></iframe>
+    </div>
+
+    <div class="karaoke-lines">
+      <p class="karaoke-stanza">[Verse]</p>
+      <p class="karaoke-line">I'm the data analyst, always on the grind</p>
+      <p class="karaoke-line">Analyzing numbers, looking for the signs</p>
+      <p class="karaoke-line">I crunch the data, uncover what's hidden</p>
+      <p class="karaoke-line">Finding insights, the competition's straining (ooh-yeah)</p>
+
+      <p class="karaoke-line">Got spreadsheets for days, my skills can't be surpassed</p>
+      <p class="karaoke-line">I break it down, do the math 'til the facts are amassed</p>
+      <p class="karaoke-line">From regression to correlation, I got it on lock</p>
+      <p class="karaoke-line">Predicting trends, I'm hitting every stock (ooh-yeah)</p>
+
+      <p class="karaoke-stanza">[Chorus]</p>
+      <p class="karaoke-line">Analyzing data, the game that I play</p>
+      <p class="karaoke-line">I'm the analyst, I do it my way</p>
+      <p class="karaoke-line">From charts to graphs, I make sense of it all</p>
+      <p class="karaoke-line">I'm the one who brings the knowledge, I make the calls</p>
+    </div>
+
+    <div class="actions" style="margin-top: 16px;">
+      <button class="karaoke-play button primary">▶ Reproducir modo karaoke</button>
+      <button class="karaoke-reset button secondary">⟲ Reiniciar</button>
+    </div>
+  </div>
+
+  <!-- Track 2: Del Dato al Dashboard -->
+  <div class="track" id="track-dashboard">
+    <p class="meta">
+      "Modelo Estrella" — letra 100% original en Spanglish, escrita para este roadmap y convertida en
+      canción. Repasa las 6 etapas del track de punta a punta. Usá el modo karaoke para seguirla en ritmo.
+    </p>
+    <div class="video-frame track-video">
+      <iframe src="https://www.youtube.com/embed/RMOGnIt4nv8" title="Modelo Estrella — Del Dato al Dashboard" loading="lazy" allowfullscreen></iframe>
+    </div>
+
+    <div class="karaoke-lines">
+      <p class="karaoke-stanza">[Verso 1]</p>
+      <p class="karaoke-line">Empecé en Excel, contando a mano,</p>
+      <p class="karaoke-line">celdas y errores, todo un pantano,</p>
+      <p class="karaoke-line">aprendí rápido, no fue en vano,</p>
+      <p class="karaoke-line">ahora hablo SQL, ¡ese es mi hermano!</p>
+
+      <p class="karaoke-stanza">[Pre-Coro]</p>
+      <p class="karaoke-line">SELECT, FROM, WHERE, GROUP BY,</p>
+      <p class="karaoke-line">JOIN de tablas, uh-uh-uh-uy,</p>
+      <p class="karaoke-line">del CSV crudo al modelo estrella,</p>
+      <p class="karaoke-line">dim_cliente, dim_tiempo, dim_bella.</p>
+
+      <p class="karaoke-stanza">[Coro]</p>
+      <p class="karaoke-line">Del dato al dashboard, we go all the way,</p>
+      <p class="karaoke-line">from raw mess to insight, that's my everyday,</p>
+      <p class="karaoke-line">Python, pandas, y un poquito de fe,</p>
+      <p class="karaoke-line">data science, baby, that's the vibe I see.</p>
+
+      <p class="karaoke-stanza">[Verso 2]</p>
+      <p class="karaoke-line">Star schema armado, fact_ventas brilla,</p>
+      <p class="karaoke-line">Power BI abierto, ¡qué maravilla!</p>
+      <p class="karaoke-line">Después K-Means agrupa a mi gente,</p>
+      <p class="karaoke-line">clusters de valor, silently, fluently.</p>
+
+      <p class="karaoke-stanza">[Pre-Coro 2]</p>
+      <p class="karaoke-line">Random Forest vota, prediction time,</p>
+      <p class="karaoke-line">probabilidad de compra, so sublime,</p>
+      <p class="karaoke-line">train test split, ochenta-veinte va,</p>
+      <p class="karaoke-line">AUC-ROC, ¡ya casi está!</p>
+
+      <p class="karaoke-stanza">[Coro]</p>
+      <p class="karaoke-line">Del dato al dashboard, we go all the way,</p>
+      <p class="karaoke-line">from raw mess to insight, that's my everyday,</p>
+      <p class="karaoke-line">Python, pandas, y un poquito de fe,</p>
+      <p class="karaoke-line">data science, baby, that's the vibe I see.</p>
+
+      <p class="karaoke-stanza">[Puente]</p>
+      <p class="karaoke-line">No hace falta ser genio de la nada,</p>
+      <p class="karaoke-line">solo un repo más y otra madrugada,</p>
+      <p class="karaoke-line">de Fundamentals a Deploy final,</p>
+      <p class="karaoke-line">this is the track, this is the trail.</p>
+
+      <p class="karaoke-stanza">[Outro]</p>
+      <p class="karaoke-line">Del dato al dashboard — enjoy the ride,</p>
+      <p class="karaoke-line">Laboratorio BI, always by your side. 🎤</p>
+    </div>
+
+    <div class="actions" style="margin-top: 16px;">
+      <button class="karaoke-play button primary">▶ Reproducir modo karaoke</button>
+      <button class="karaoke-reset button secondary">⟲ Reiniciar</button>
+    </div>
   </div>
 
   <p class="meta enjoy-wip">🚧 En iteración — esta página va a ir cambiando.</p>

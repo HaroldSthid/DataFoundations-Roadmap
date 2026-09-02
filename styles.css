@@ -245,23 +245,13 @@ h1 {
   box-shadow: var(--shadow);
 }
 
-.husky-icon { width: 40px; height: 34px; overflow: visible; }
-.husky-head { fill: #e9e6de; stroke: var(--text); stroke-width: 2; }
-.husky-mask { fill: #b8b2a4; }
-.husky-eye { fill: var(--accent-green); }
-.husky-nose { fill: var(--text); }
-.husky-ear {
-  fill: #e9e6de;
-  stroke: var(--text);
-  stroke-width: 2;
-  transform-origin: 60px 34px;
-  animation: husky-ear-wiggle 2.4s ease-in-out infinite;
-}
-.husky-ear-r { animation-delay: 0.15s; }
-
-@keyframes husky-ear-wiggle {
-  0%, 100% { transform: rotate(0deg); }
-  50% { transform: rotate(-6deg); }
+.husky-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 1px solid var(--border);
 }
 
 .husky-label { font-size: 0.85rem; font-weight: 700; white-space: nowrap; }

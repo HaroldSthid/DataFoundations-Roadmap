@@ -280,8 +280,9 @@ h1 {
 }
 
 @media (max-width: 860px) {
-  .husky-cta { position: relative; }
+  .husky-cta { position: relative; margin-top: 14px; max-width: 100%; }
   .husky-trail { display: none; }
+  .husky-label { white-space: normal; font-size: 0.8rem; line-height: 1.3; }
 }
 
 /* Karaoke */

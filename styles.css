@@ -248,8 +248,8 @@ h1 {
 .husky-icon {
   width: 64px;
   height: 64px;
-  border-radius: 12px;
-  object-fit: contain;
+  border-radius: 50%;
+  object-fit: cover;
   background: #fff;
   flex-shrink: 0;
   border: 1px solid var(--border);

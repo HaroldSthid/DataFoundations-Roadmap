@@ -107,15 +107,22 @@ function stopKaraoke(trackEl) {
       }
       stopKaraoke(trackEl);
 
+      let lineMs = LINE_MS;
       const player = ytPlayers[trackEl.id];
       if (player && typeof player.seekTo === "function") {
         player.seekTo(0, true);
         player.playVideo();
+        const duration = player.getDuration();
+        if (duration > 0) {
+          // Reparte las líneas a lo largo de la duración real del video,
+          // así el karaoke termina justo cuando termina la canción.
+          lineMs = (duration * 1000) / state.lines.length;
+        }
       }
 
       state.idx = -1;
       step();
-      state.timer = setInterval(step, LINE_MS);
+      state.timer = setInterval(step, lineMs);
       playBtn.textContent = "⏸ Sonando…";
     });
 

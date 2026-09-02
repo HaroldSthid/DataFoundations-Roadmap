@@ -246,10 +246,11 @@ h1 {
 }
 
 .husky-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  object-fit: cover;
+  width: 64px;
+  height: 64px;
+  border-radius: 12px;
+  object-fit: contain;
+  background: #fff;
   flex-shrink: 0;
   border: 1px solid var(--border);
 }

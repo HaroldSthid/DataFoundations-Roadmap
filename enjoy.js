@@ -1,3 +1,40 @@
+// --- YouTube IFrame API: un player controlable por pista -----------------
+const ytPlayers = {};
+let ytApiReady = false;
+const onYtReadyQueue = [];
+
+window.onYouTubeIframeAPIReady = function () {
+  ytApiReady = true;
+  onYtReadyQueue.forEach((fn) => fn());
+  onYtReadyQueue.length = 0;
+};
+
+(function loadYtApi() {
+  const tag = document.createElement("script");
+  tag.src = "https://www.youtube.com/iframe_api";
+  document.head.appendChild(tag);
+})();
+
+function initPlayers() {
+  document.querySelectorAll(".yt-player").forEach((el) => {
+    const trackEl = el.closest(".track");
+    const videoId = el.dataset.videoId;
+    if (!trackEl || !videoId) return;
+
+    const player = new YT.Player(el, {
+      videoId,
+      playerVars: { rel: 0 },
+    });
+    ytPlayers[trackEl.id] = player;
+  });
+}
+
+if (ytApiReady) {
+  initPlayers();
+} else {
+  onYtReadyQueue.push(initPlayers);
+}
+
 // --- Playlist tabs -------------------------------------------------------
 (function initTabs() {
   const tabs = document.querySelectorAll(".track-tab");
@@ -20,7 +57,7 @@
   });
 })();
 
-// --- Modo karaoke (uno por pista) ----------------------------------------
+// --- Modo karaoke (uno por pista, sincronizado con el player) ------------
 const karaokeState = new WeakMap();
 
 function stopKaraoke(trackEl) {
@@ -28,7 +65,11 @@ function stopKaraoke(trackEl) {
   if (state && state.timer) {
     clearInterval(state.timer);
     state.timer = null;
-    state.playBtn.textContent = "▶ Reproducir modo karaoke";
+    state.playBtn.textContent = "▶ Reproducir canción + karaoke";
+  }
+  const player = ytPlayers[trackEl.id];
+  if (player && typeof player.pauseVideo === "function") {
+    player.pauseVideo();
   }
 }
 
@@ -65,16 +106,27 @@ function stopKaraoke(trackEl) {
         return;
       }
       stopKaraoke(trackEl);
+
+      const player = ytPlayers[trackEl.id];
+      if (player && typeof player.seekTo === "function") {
+        player.seekTo(0, true);
+        player.playVideo();
+      }
+
       state.idx = -1;
       step();
       state.timer = setInterval(step, LINE_MS);
-      playBtn.textContent = "⏸ Cantando…";
+      playBtn.textContent = "⏸ Sonando…";
     });
 
     resetBtn.addEventListener("click", () => {
       stopKaraoke(trackEl);
       clearActive();
       state.idx = -1;
+      const player = ytPlayers[trackEl.id];
+      if (player && typeof player.seekTo === "function") {
+        player.seekTo(0, true);
+      }
       state.lines[0].scrollIntoView({ behavior: "smooth", block: "center" });
     });
   });
